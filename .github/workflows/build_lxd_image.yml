@@ -14,12 +14,6 @@ jobs:
 
           # create storage pool
           cat <<EOF | lxd init --preseed
-          networks:
-          - name: lxdbr0
-            type: bridge
-            config:
-              ipv4.address: auto
-              ipv6.address: none
           storage_pools:
           - name: default
             driver: dir
