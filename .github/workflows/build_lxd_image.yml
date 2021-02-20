@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: prepare LXD
         run: |
-          sudo apt install snapd
+          sudo apt-get -y install snapd
           sudo snap install lxd
           sudo lxd init --auto
       - uses: actions/checkout@v2
@@ -26,4 +26,4 @@ jobs:
         uses: docker://hashicorp/packer:1.4.3
         with:
           args: build images/linux/ubuntu2004.json
-        #- uses: mxschmitt/action-tmate@v3
+      - uses: mxschmitt/action-tmate@v3
