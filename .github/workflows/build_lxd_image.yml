@@ -9,6 +9,7 @@ jobs:
       - name: prepare LXD
         run: |
           sudo snap install lxd
+          sudo chmod o+g '/var/snap/lxd/common/lxd/unix.socket'
           sudo lxd init --auto
       - name: prepare packer
         run: |
