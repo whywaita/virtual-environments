@@ -8,7 +8,6 @@ jobs:
     steps:
       - name: prepare LXD
         run: |
-          sudo apt-get -y install snapd
           sudo snap install lxd
           sudo lxd init --auto
       - uses: actions/checkout@v2
@@ -16,12 +15,16 @@ jobs:
         run: |
           patch -p1 < lxd.patch
       - name: packer validate packer.json
-        uses: docker://hashicorp/packer:1.7.0
+        uses: operatehappy/packer-github-actions@master
         with:
-          args: validate images/linux/ubuntu2004.json
+          command: validate
+          arguments: -syntax-only
+          target: images/linux/ubuntu2004.json
       - name: packer build packer.json
-        uses: docker://hashicorp/packer:1.4.3
+        uses: operatehappy/packer-github-actions@master
         with:
-          args: build images/linux/ubuntu2004.json
+          command: build
+          arguments: "-color=false -on-error=abort"
+          target: images/linux/ubuntu2004.json
       - uses: mxschmitt/action-tmate@v3
         if: ${{ always() }}
