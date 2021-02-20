@@ -10,21 +10,21 @@ jobs:
         run: |
           sudo snap install lxd
           sudo lxd init --auto
+      - name: prepare packer
+        run: |
+          sudo apt-get install -y wget unzip
+          sudo curl -L -O https://releases.hashicorp.com/packer/1.7.0/packer_1.7.0_linux_amd64.zip
+          sudo unzip packer_1.7.0_linux_amd64.zip
+          sudo mv ./packer /tmp/packer
       - uses: actions/checkout@v2
       - name: apply LXD patch
         run: |
           patch -p1 < lxd.patch
       - name: packer validate packer.json
-        uses: operatehappy/packer-github-actions@master
-        with:
-          command: validate
-          arguments: -syntax-only
-          target: images/linux/ubuntu2004.json
+        run: |
+          /tmp/packer validate -syntax-only images/linux/ubuntu2004.json
       - name: packer build packer.json
-        uses: operatehappy/packer-github-actions@master
-        with:
-          command: build
-          arguments: "-color=false -on-error=abort"
-          target: images/linux/ubuntu2004.json
+        run: |
+          /tmp/packer build -color=false -on-error=abort images/linux/ubuntu2004.json
       - uses: mxschmitt/action-tmate@v3
         if: ${{ always() }}
