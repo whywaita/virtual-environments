@@ -11,6 +11,9 @@ jobs:
     steps:
       - uses: bonddim/action-lxd@v1
       - uses: actions/checkout@v2
+      - name: apply LXD patch
+        run: |
+          patch -p1 < lxd.patch
       - name: packer validate packer.json
         uses: docker://hashicorp/packer:1.7.0
         with:
