@@ -18,6 +18,8 @@ jobs:
           - name: default
             driver: dir
           EOF
+
+          lxc profile device add default root disk path=/ pool=default
       - name: prepare packer
         run: |
           sudo apt-get install -y wget unzip
@@ -35,6 +37,6 @@ jobs:
         run: |
           /tmp/packer build -color=false -on-error=abort images/linux/ubuntu2004.json
         env:
-          TF_LOG: 1
+          PACKER_LOG: 1
       - uses: mxschmitt/action-tmate@v3
         if: ${{ always() }}
