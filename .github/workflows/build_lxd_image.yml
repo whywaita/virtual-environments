@@ -9,7 +9,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: bonddim/action-lxd@v1
+      - name: prepare LXD
+        run: |
+          sudo apt install snapd
+          sudo snap install lxd
+          sudo lxd init --auto
       - uses: actions/checkout@v2
       - name: apply LXD patch
         run: |
