@@ -24,3 +24,4 @@ jobs:
         with:
           args: build images/linux/ubuntu2004.json
       - uses: mxschmitt/action-tmate@v3
+        if: ${{ always() }}
