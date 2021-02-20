@@ -34,5 +34,7 @@ jobs:
       - name: packer build packer.json
         run: |
           /tmp/packer build -color=false -on-error=abort images/linux/ubuntu2004.json
+        env:
+          TF_LOG: 1
       - uses: mxschmitt/action-tmate@v3
         if: ${{ always() }}
