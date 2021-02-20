@@ -11,6 +11,13 @@ jobs:
           sudo snap install lxd
           sudo chmod o+g '/var/snap/lxd/common/lxd/unix.socket'
           sudo lxd init --auto
+
+          # create storage pool
+          cat <<EOF | lxd init --preseed
+          storage_pools:
+          - name: default
+            driver: dir
+          EOF
       - name: prepare packer
         run: |
           sudo apt-get install -y wget unzip
