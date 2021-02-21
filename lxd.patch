@@ -44,6 +44,16 @@ index 5acae9c2..affc62c7 100644
 -invoke_tests "DotnetSDK"
 \ No newline at end of file
 +invoke_tests "DotnetSDK"
+diff --git a/images/linux/scripts/installers/homebrew.sh b/images/linux/scripts/installers/homebrew.sh
+index 00d8157f..2666b721 100644
+--- a/images/linux/scripts/installers/homebrew.sh
++++ b/images/linux/scripts/installers/homebrew.sh
+@@ -25,4 +25,4 @@ setEtcEnvironmentVariable HOMEBREW_CLEANUP_PERIODIC_FULL_DAYS 3650
+ echo "Validate the installation reloading /etc/environment"
+ reloadEtcEnvironment
+ 
+-invoke_tests "Tools" "Homebrew"
++#invoke_tests "Tools" "Homebrew"
 diff --git a/images/linux/ubuntu2004.json b/images/linux/ubuntu2004.json
 index 2b52f1c1..cb285cb4 100644
 --- a/images/linux/ubuntu2004.json
