@@ -6,32 +6,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: prepare LXD
+      - uses: whywaita/setup-lxd@v1
+      - name: delete unused file
         run: |
-          sudo snap install lxd
-          sudo chmod o+g '/var/snap/lxd/common/lxd/unix.socket'
-          # create storage pool
-          cat <<EOF | lxd init --preseed
-          storage_pools:
-          - name: default
-            driver: dir
-          networks:
-          - name: lxdbr0
-            type: bridge
-            config:
-              ipv4.address: auto
-              ipv6.address: none
-
-          profiles:
-          - name: default
-            devices:
-              root:
-                path: /
-                pool: default
-                type: disk
-          EOF
-
-          lxc profile device add default eth0 nic name=eth0 network=lxdbr0
+          sudo rm -rf /opt/hostedtoolcache/* /opt/ghc
       - name: prepare packer
         run: |
           sudo apt-get install -y wget unzip
