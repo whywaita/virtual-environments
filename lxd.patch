@@ -55,7 +55,7 @@ index 00d8157f..2666b721 100644
 -invoke_tests "Tools" "Homebrew"
 +#invoke_tests "Tools" "Homebrew"
 diff --git a/images/linux/ubuntu2004.json b/images/linux/ubuntu2004.json
-index 2b52f1c1..cb285cb4 100644
+index 2b52f1c1..e608f8e7 100644
 --- a/images/linux/ubuntu2004.json
 +++ b/images/linux/ubuntu2004.json
 @@ -29,27 +29,8 @@
@@ -130,7 +130,31 @@ index 2b52f1c1..cb285cb4 100644
          },
          {
              "type": "shell",
-@@ -365,8 +357,7 @@
+@@ -311,23 +303,6 @@
+             "script": "{{template_dir}}/scripts/base/apt-mock-remove.sh",
+             "execute_command": "sudo sh -c '{{ .Vars }} {{ .Path }}'"
+         },
+-        {
+-            "type": "shell",
+-            "inline": [
+-                "pwsh -File {{user `image_folder`}}/SoftwareReport/SoftwareReport.Generator.ps1 -OutputDirectory {{user `image_folder`}}",
+-                "pwsh -File {{user `image_folder`}}/tests/RunAll-Tests.ps1 -OutputDirectory {{user `image_folder`}}"
+-            ],
+-            "environment_vars": [
+-                "IMAGE_VERSION={{user `image_version`}}",
+-                "INSTALLER_SCRIPT_FOLDER={{user `installer_script_folder`}}"
+-            ]
+-        },
+-        {
+-            "type": "file",
+-            "source": "{{user `image_folder`}}/Ubuntu-Readme.md",
+-            "destination": "{{template_dir}}/Ubuntu2004-README.md",
+-            "direction": "download"
+-        },
+         {
+             "type": "shell",
+             "scripts":[
+@@ -365,8 +340,7 @@
          {
              "type": "shell",
              "inline": [
