@@ -28,6 +28,7 @@ jobs:
               root:
                 path: /
                 pool: default
+                type: disk
           EOF
       - name: prepare packer
         run: |
