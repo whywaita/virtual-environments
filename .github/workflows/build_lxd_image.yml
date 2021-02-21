@@ -33,5 +33,13 @@ jobs:
           /tmp/packer build -color=false -on-error=abort images/linux/ubuntu2004.json
         env:
           PACKER_LOG: 1
+      - name: Export image
+        run: |
+          mkdir -p _output
+          lxc image export packer-lxd ./_output
+      - uses: actions/upload-artifact@v2
+        with:
+          name: image
+          path: _output
       - uses: mxschmitt/action-tmate@v3
         if: ${{ always() }}
