@@ -23,7 +23,7 @@ index 9ce7fe9f..717ea092 100644
 \ No newline at end of file
 +ln -s $HELPER_SCRIPTS/invoke-tests.sh /usr/local/bin/invoke_tests
 diff --git a/images/linux/ubuntu2004.json b/images/linux/ubuntu2004.json
-index 2b52f1c1..d9139b4b 100644
+index 2b52f1c1..34e37ec6 100644
 --- a/images/linux/ubuntu2004.json
 +++ b/images/linux/ubuntu2004.json
 @@ -29,27 +29,8 @@
@@ -56,6 +56,21 @@ index 2b52f1c1..d9139b4b 100644
          }
      ],
      "provisioners": [
+@@ -92,12 +73,12 @@
+         {
+             "type": "file",
+             "source": "{{template_dir}}/scripts/helpers",
+-            "destination": "{{user `helper_script_folder`}}"
++            "destination": "{{user `image_folder`}}"
+         },
+         {
+             "type": "file",
+             "source": "{{template_dir}}/scripts/installers",
+-            "destination": "{{user `installer_script_folder`}}"
++            "destination": "{{user `image_folder`}}"
+         },
+         {
+             "type": "file",
 @@ -365,8 +346,7 @@
          {
              "type": "shell",
