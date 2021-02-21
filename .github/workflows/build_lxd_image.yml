@@ -9,7 +9,7 @@ jobs:
       - uses: whywaita/setup-lxd@v1
       - name: delete unused file
         run: |
-          sudo rm -rf /opt/hostedtoolcache /opt/ghc /usr/share/dotnet
+          sudo rm -rf /opt/hostedtoolcache /opt/ghc /usr/share/* /usr/local/* /var/lib/docker/*
       - name: prepare packer
         run: |
           sudo apt-get install -y wget unzip
