@@ -37,6 +37,15 @@ jobs:
         run: |
           mkdir -p _output
           lxc image export packer-lxd ./_output
+      - name: notify status
+        uses: lazy-actions/slatify@master
+        if: always()
+        with:
+          job_name: '*build virtual-environments-lxd*'
+          type: ${{ job.status }}
+          icon_emoji: ":octocat:"
+          url: ${{ secrets.SLACK_WEBHOOK_URL }}
+          token: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/upload-artifact@v2
         with:
           name: image
