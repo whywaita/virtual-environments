@@ -56,10 +56,15 @@ jobs:
         run: |
           git push origin main
 
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          path: _output/*.tar.gz
+
 
       - name: Notify status
         uses: lazy-actions/slatify@master
-        if: always()
+        if: failure()
         with:
           job_name: '*nightly update virtual-environments-lxd*'
           type: ${{ job.status }}
