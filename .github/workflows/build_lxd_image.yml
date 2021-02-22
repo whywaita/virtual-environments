@@ -7,7 +7,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: whywaita/setup-lxd@v1
-      - uses: hashicorp-contrib/setup-packer@v1
+      - name: setup-packer
+        run: |
+          sudo apt-get install -y wget unzip
+          sudo curl -L -O https://releases.hashicorp.com/packer/1.7.0/packer_1.7.0_linux_amd64.zip
+          sudo unzip packer_1.7.0_linux_amd64.zip
+          sudo mv ./packer /tmp/packer
       - uses: actions/checkout@v2
       - name: Delete unused file
         run: |
@@ -15,7 +20,6 @@ jobs:
           sudo rm -rf /opt/ghc
           sudo rm -rf /usr/local/*
           sudo rm -rf /var/lib/docker/*
-
           # ignore /usr/share/dpkg
           ls /usr/share/ | grep -v dpkg | xargs -I%% sudo rm -rf /usr/share/%%
 
@@ -25,10 +29,10 @@ jobs:
           patch -p1 < lxd.patch
       - name: packer validate packer.json
         run: |
-          packer validate -syntax-only images/linux/ubuntu2004.json
+          /tmp/packer validate -syntax-only images/linux/ubuntu2004.json
       - name: packer build packer.json
         run: |
-          packer build -color=false -on-error=abort images/linux/ubuntu2004.json
+          /tmp/packer build -color=false -on-error=abort images/linux/ubuntu2004.json
         env:
           PACKER_LOG: 1
       - name: Export image
