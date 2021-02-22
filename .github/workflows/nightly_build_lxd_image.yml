@@ -29,7 +29,8 @@ jobs:
       - name: Pull from upstream
         run: |
           git remote add upstream https://github.com/actions/virtual-environments/
-          git pull upstream main
+          git fetch upstream
+          git merge --allow-unrelated-histories origin/main
       - name: Apply LXD patch
         run: |
           patch -p1 < lxd.patch
