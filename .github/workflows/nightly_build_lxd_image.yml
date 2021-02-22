@@ -28,6 +28,9 @@ jobs:
 
       - name: Pull from upstream
         run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+
           git remote add upstream https://github.com/actions/virtual-environments/
           git fetch upstream
           git merge --allow-unrelated-histories upstream/main
@@ -51,9 +54,6 @@ jobs:
 
       - name: Apply to main
         run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email 'github-actions[bot]@users.noreply.github.com'
-
           git push origin main
 
 
