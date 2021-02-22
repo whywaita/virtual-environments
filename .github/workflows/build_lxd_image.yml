@@ -50,5 +50,3 @@ jobs:
         with:
           name: image
           path: _output
-      - uses: mxschmitt/action-tmate@v3
-        if: ${{ always() }}
