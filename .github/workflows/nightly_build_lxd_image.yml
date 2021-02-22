@@ -1,6 +1,8 @@
-name: build LXD image
+name: nightly update
 on:
-  pull_request:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
 
 jobs:
   build:
@@ -18,11 +20,15 @@ jobs:
 
           # ignore /usr/share/dpkg
           ls /usr/share/ | grep -v dpkg | xargs -I%% sudo rm -rf /usr/share/%%
-
-
+      - name: Pull from upstream
+        run: |
+          git remote add upstream https://github.com/actions/virtual-environments/
+          git pull upstream main
       - name: Apply LXD patch
         run: |
           patch -p1 < lxd.patch
+
+
       - name: packer validate packer.json
         run: |
           packer validate -syntax-only images/linux/ubuntu2004.json
@@ -36,7 +42,12 @@ jobs:
           mkdir -p _output
           lxc image export packer-lxd ./_output
 
+      - name: Apply to main
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
 
+          git push origin main
       - name: Notify status
         uses: lazy-actions/slatify@master
         if: always()
