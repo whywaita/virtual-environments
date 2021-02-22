@@ -30,7 +30,7 @@ jobs:
         run: |
           git remote add upstream https://github.com/actions/virtual-environments/
           git fetch upstream
-          git merge --allow-unrelated-histories origin/main
+          git merge --allow-unrelated-histories upstream/main
       - name: Apply LXD patch
         run: |
           patch -p1 < lxd.patch
